@@ -92,15 +92,58 @@ namespace MesaDePartesDigital
         }
         static void MostrarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
-
+            
         }
         static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
-
+           
         }
         static void OrdenarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
+            Console.Clear();
+            Console.WriteLine("==========================================================");
+            Console.WriteLine("             ORDENAR EXPEDIENTES POR CÓDIGO");
+            Console.WriteLine("==========================================================");
+            if (totalRegistros <= 1)
+            {
+                Console.WriteLine("No hay suficientes expedientes para ordenar.");
+            }
+            else 
+            {
+                for (int i=0;i<totalRegistros-1;i++) 
+                {
+                    for (int j=0;j<totalRegistros-1-i;j++) 
+                    {
+                        if (codigos[j].CompareTo(codigos[j+1])>0) 
+                        {
+                            string auxCod = codigos[j];
+                            codigos[j] = codigos[j + 1];
+                            codigos[j + 1] = auxCod;
 
+                            string auxDni = DNI[j];
+                            DNI[j] = DNI[j + 1];
+                            DNI[j + 1] = auxDni;
+
+                            string auxRem = remitentes[j];
+                            remitentes[j] = remitentes[j + 1];
+                            remitentes[j + 1] = auxRem;
+
+                            string auxTipo = tiposDoc[j];
+                            tiposDoc[j] = tiposDoc[j + 1];
+                            tiposDoc[j + 1] = auxTipo;
+
+                            string auxAsu = asuntos[j];
+                            asuntos[j] = asuntos[j + 1];
+                            asuntos[j + 1] = auxAsu;
+
+                            string auxEst = estados[j];
+                            estados[j] = estados[j + 1];
+                            estados[j + 1] = auxEst;
+                        }
+                    }
+                }
+                Console.WriteLine("Expedientes ordenados correctamente.");
+            }
         }
         static void ActualizarEstado(string[] codigos, string[] estados, int totalRegistros)
         {
