@@ -101,9 +101,11 @@ namespace MesaDePartesDigital
         static void OrdenarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
             Console.Clear();
+            
             Console.WriteLine("==========================================================");
             Console.WriteLine("             ORDENAR EXPEDIENTES POR CÓDIGO");
             Console.WriteLine("==========================================================");
+            
             if (totalRegistros <= 1)
             {
                 Console.WriteLine("No hay suficientes expedientes para ordenar.");
@@ -147,7 +149,7 @@ namespace MesaDePartesDigital
         }
         static void ActualizarEstado(string[] codigos, string[] estados, int totalRegistros)
         {
-
+            //falta agregar codigo
         }
 
     }
