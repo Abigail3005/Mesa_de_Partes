@@ -312,7 +312,91 @@ Console.WriteLine();
         }
         static void ActualizarEstado(string[] codigos, string[] estados, int totalRegistros)
         {
-            //falta agregar codigo
+            string codigoBuscado;
+            bool encontrado;
+            int i, pos, opEst;
+
+            Console.Clear();
+
+            Console.WriteLine("==============================================");
+            Console.WriteLine("           ACTUALIZAR ESTADO");
+            Console.WriteLine("==============================================");
+
+            if (totalRegistros == 0)
+            {
+                Console.WriteLine("No hay expedientes en el sistema.");
+            }
+            else
+            {
+                Console.Write("Ingrese el código del expediente: ");
+                codigoBuscado = Console.ReadLine();
+
+                encontrado = false;
+                pos = -1;
+
+                for (i = 0; i < totalRegistros; i++)
+                {
+                    if (codigos[i].ToUpper() == codigoBuscado.ToUpper())
+                    {
+                        encontrado = true;
+                        pos = i;
+                        break;
+                    }
+                }
+
+                if (!encontrado)
+                {
+                    Console.WriteLine("No se encontró el expediente.");
+                }
+                else
+                {
+                    Console.WriteLine("\nEstado actual: " + estados[pos]);
+                    Console.WriteLine("\nSeleccione el nuevo estado:");
+                    Console.WriteLine("1. EN REVISIÓN");
+                    Console.WriteLine("2. DERIVADO A OFICINA");
+                    Console.WriteLine("3. FINALIZADO / ATENDIDO");
+                    Console.WriteLine("4. ARCHIVADO");
+
+                    do
+                    {
+                        Console.Write("Opción (1-4): ");
+
+                        if (!int.TryParse(Console.ReadLine(), out opEst))
+                        {
+                            opEst = 0;
+                        }
+
+                        if (opEst < 1 || opEst > 4)
+                        {
+                            Console.WriteLine("Error: opción no válida.");
+                        }
+
+                    } while (opEst < 1 || opEst > 4);
+
+                    switch (opEst)
+                    {
+                        case 1:
+                            estados[pos] = "EN REVISIÓN";
+                            break;
+
+                        case 2:
+                            estados[pos] = "DERIVADO A OFICINA";
+                            break;
+
+                        case 3:
+                            estados[pos] = "FINALIZADO / ATENDIDO";
+                            break;
+
+                        case 4:
+                            estados[pos] = "ARCHIVADO";
+                            break;
+                    }
+
+                    Console.WriteLine("\nEstado actualizado correctamente.");
+                    Console.WriteLine("Nuevo estado: " + estados[pos]);
+                }
+
+            }
         }
     }
 }
