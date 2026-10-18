@@ -209,7 +209,11 @@ Console.WriteLine();
         }
       
         static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
+<<<<<<< HEAD
 {
+=======
+        {
+>>>>>>> origin/buscar
             string codigoBuscado;
             bool encontrado;
             int i, pos;
