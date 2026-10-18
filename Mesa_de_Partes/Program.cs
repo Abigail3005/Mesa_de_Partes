@@ -88,8 +88,100 @@ namespace MesaDePartesDigital
         }
         static void RegistrarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, ref int totalRegistros)
         {
+            Console.WriteLine();
+            Console.WriteLine("---- REGISTRAR NUEVO EXPEDIENTE ----");
+            if (totalRegistros >= codigos.Length)
+            {
+                Console.WriteLine("No se pueden registrar más expedientes. Capacidad máxima alcanzada.");
+                return;
+            }
+            string dniIngresado;
+            bool dniValido;
+            do
+            {
+                Console.Write("Ingrese DNI del remitente (8 dígitos): ");
+                dniIngresado = Console.ReadLine();
+                dniValido = EsDniValido(dniIngresado);
 
+                if (!dniValido)
+                {
+                    Console.WriteLine("DNI inválido. Debe contener exactamente 8 números.");
+                }
+
+            } while (!dniValido);
+            string remitenteIngresado;
+            do
+            {
+                Console.Write("Ingrese nombre completo del remitente: ");
+                remitenteIngresado = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(remitenteIngresado))
+                {
+                    Console.WriteLine("El nombre del remitente no puede estar vacío.");
+                }
+
+            } while (string.IsNullOrWhiteSpace(remitenteIngresado));
+            string[] tiposPermitidos = { "OFICIO", "EXPEDIENTE", "DOCUMENTO EXTERNO", "SOLICITUD" };
+            string tipoIngresado;
+            bool tipoValido;
+            do
+            {
+                Console.WriteLine("Tipos de documento disponibles: OFICIO, EXPEDIENTE, DOCUMENTO EXTERNO, SOLICITUD");
+                Console.Write("Ingrese tipo de documento: ");
+                tipoIngresado = Console.ReadLine().Trim().ToUpper();
+
+                tipoValido = tiposPermitidos.Contains(tipoIngresado);
+
+                if (!tipoValido)
+                {
+                    Console.WriteLine("Tipo de documento no válido. Intente nuevamente.");
+                }
+
+            } while (!tipoValido);
+            string asuntoIngresado;
+            do
+            {
+                Console.Write("Ingrese asunto del documento: ");
+                asuntoIngresado = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(asuntoIngresado))
+                {
+                    Console.WriteLine("El asunto no puede estar vacío.");
+                }
+
+            } while (string.IsNullOrWhiteSpace(asuntoIngresado));
+            string codigoGenerado = GenerarCodigo(totalRegistros);
+            codigos[totalRegistros] = codigoGenerado;
+            DNI[totalRegistros] = dniIngresado;
+            remitentes[totalRegistros] = remitenteIngresado;
+            tiposDoc[totalRegistros] = tipoIngresado;
+            asuntos[totalRegistros] = asuntoIngresado;
+            estados[totalRegistros] = "RECIBIDO";
+            totalRegistros++;
+            Console.WriteLine();
+            Console.WriteLine("Expediente registrado con éxito.");
+            Console.WriteLine("Código asignado: " + codigoGenerado);
         }
+        static bool EsDniValido(string dni)
+        {
+            if (string.IsNullOrWhiteSpace(dni) || dni.Length != 8)
+                return false;
+
+            foreach (char c in dni)
+            {
+                if (!char.IsDigit(c))
+                    return false;
+            }
+
+            return true;
+        }
+        static string GenerarCodigo(int totalRegistrosActual)
+        {
+            int numero = totalRegistrosActual + 1;
+            int anioActual = DateTime.Now.Year;
+            return "EXP-" + anioActual + "-" + numero.ToString("D3");
+        }
+
         static void MostrarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
 
@@ -106,7 +198,5 @@ namespace MesaDePartesDigital
         {
 
         }
-
     }
 }
-
