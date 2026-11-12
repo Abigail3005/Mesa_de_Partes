@@ -1,8 +1,10 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BibliotecaMesaPartes;
 
 namespace MesaDePartesDigital
 {
@@ -89,20 +91,24 @@ namespace MesaDePartesDigital
 
         static void RegistrarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, ref int totalRegistros)
         {
-Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("---- REGISTRAR NUEVO EXPEDIENTE ----");
+
             if (totalRegistros >= codigos.Length)
             {
                 Console.WriteLine("No se pueden registrar más expedientes. Capacidad máxima alcanzada.");
                 return;
             }
+
             string dniIngresado;
             bool dniValido;
+
             do
             {
                 Console.Write("Ingrese DNI del remitente (8 dígitos): ");
                 dniIngresado = Console.ReadLine();
-                dniValido = EsDniValido(dniIngresado);
+
+                dniValido = Expedientes.EsDniValido(dniIngresado);
 
                 if (!dniValido)
                 {
@@ -110,7 +116,9 @@ Console.WriteLine();
                 }
 
             } while (!dniValido);
+
             string remitenteIngresado;
+
             do
             {
                 Console.Write("Ingrese nombre completo del remitente: ");
@@ -122,13 +130,22 @@ Console.WriteLine();
                 }
 
             } while (string.IsNullOrWhiteSpace(remitenteIngresado));
-            string[] tiposPermitidos = { "OFICIO", "EXPEDIENTE", "DOCUMENTO EXTERNO", "SOLICITUD" };
+
+            string[] tiposPermitidos = {
+                "OFICIO",
+                "EXPEDIENTE",
+                "DOCUMENTO EXTERNO",
+                "SOLICITUD"
+            };
+
             string tipoIngresado;
             bool tipoValido;
+
             do
             {
                 Console.WriteLine("Tipos de documento disponibles: OFICIO, EXPEDIENTE, DOCUMENTO EXTERNO, SOLICITUD");
                 Console.Write("Ingrese tipo de documento: ");
+
                 tipoIngresado = Console.ReadLine().Trim().ToUpper();
 
                 tipoValido = tiposPermitidos.Contains(tipoIngresado);
@@ -139,7 +156,9 @@ Console.WriteLine();
                 }
 
             } while (!tipoValido);
+
             string asuntoIngresado;
+
             do
             {
                 Console.Write("Ingrese asunto del documento: ");
@@ -151,45 +170,31 @@ Console.WriteLine();
                 }
 
             } while (string.IsNullOrWhiteSpace(asuntoIngresado));
-            string codigoGenerado = GenerarCodigo(totalRegistros);
+
+            string codigoGenerado = Expedientes.GenerarCodigo(totalRegistros);
+
             codigos[totalRegistros] = codigoGenerado;
             DNI[totalRegistros] = dniIngresado;
             remitentes[totalRegistros] = remitenteIngresado;
             tiposDoc[totalRegistros] = tipoIngresado;
             asuntos[totalRegistros] = asuntoIngresado;
             estados[totalRegistros] = "RECIBIDO";
+
             totalRegistros++;
+
             Console.WriteLine();
             Console.WriteLine("Expediente registrado con éxito.");
             Console.WriteLine("Código asignado: " + codigoGenerado);
-        }
-        static bool EsDniValido(string dni)
-        {
-            if (string.IsNullOrWhiteSpace(dni) || dni.Length != 8)
-                return false;
-
-            foreach (char c in dni)
-            {
-                if (!char.IsDigit(c))
-                    return false;
-            }
-
-            return true;
-        }
-        static string GenerarCodigo(int totalRegistrosActual)
-        {
-            int numero = totalRegistrosActual + 1;
-            int anioActual = DateTime.Now.Year;
-            return "EXP-" + anioActual + "-" + numero.ToString("D3");
         }
 
         static void MostrarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
             Console.Clear();
+
             Console.WriteLine("================================================================================");
             Console.WriteLine("                        LISTA TOTAL DE EXPEDIENTES                              ");
             Console.WriteLine("================================================================================");
-            
+
             if (totalRegistros == 0)
             {
                 Console.WriteLine("No existen expedientes registrados en el sistema.");
@@ -204,12 +209,12 @@ Console.WriteLine();
                     Console.WriteLine($"TIPO: {tiposDoc[i]}");
                     Console.WriteLine($"ASUNTO: {asuntos[i]}");
                 }
+
                 Console.WriteLine("--------------------------------------------------------------------------------");
                 Console.WriteLine($"Total registrados: {totalRegistros}");
             }
-
         }
-      
+
         static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
             string codigoBuscado;
@@ -228,7 +233,7 @@ Console.WriteLine();
             }
             else
             {
-                Console.Write("Ingrese el código a buscar (ejemplo EXP-1): ");
+                Console.Write("Ingrese el código a buscar (ejemplo EXP-2026-001): ");
                 codigoBuscado = Console.ReadLine();
 
                 encontrado = false;
@@ -261,25 +266,26 @@ Console.WriteLine();
                 }
             }
         }
+
         static void OrdenarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
             Console.Clear();
-            
+
             Console.WriteLine("==========================================================");
             Console.WriteLine("             ORDENAR EXPEDIENTES POR CÓDIGO");
             Console.WriteLine("==========================================================");
-            
+
             if (totalRegistros <= 1)
             {
                 Console.WriteLine("No hay suficientes expedientes para ordenar.");
             }
-            else 
+            else
             {
-                for (int i=0;i<totalRegistros-1;i++) 
+                for (int i = 0; i < totalRegistros - 1; i++)
                 {
-                    for (int j=0;j<totalRegistros-1-i;j++) 
+                    for (int j = 0; j < totalRegistros - 1 - i; j++)
                     {
-                        if (codigos[j].CompareTo(codigos[j+1])>0) 
+                        if (codigos[j].CompareTo(codigos[j + 1]) > 0)
                         {
                             string auxCod = codigos[j];
                             codigos[j] = codigos[j + 1];
@@ -307,9 +313,11 @@ Console.WriteLine();
                         }
                     }
                 }
+
                 Console.WriteLine("Expedientes ordenados correctamente.");
             }
         }
+
         static void ActualizarEstado(string[] codigos, string[] estados, int totalRegistros)
         {
             string codigoBuscado;
@@ -395,7 +403,6 @@ Console.WriteLine();
                     Console.WriteLine("\nEstado actualizado correctamente.");
                     Console.WriteLine("Nuevo estado: " + estados[pos]);
                 }
-
             }
         }
     }
