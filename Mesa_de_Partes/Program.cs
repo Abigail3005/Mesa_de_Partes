@@ -26,21 +26,93 @@ namespace MesaDePartesDigital
             {
                 Console.Clear();
 
-                Console.WriteLine("================================");
-                Console.WriteLine("  MESA DE PARTES DIGITAL - UNC  ");
-                Console.WriteLine("================================");
-                Console.WriteLine("1. Registrar expediente");
-                Console.WriteLine("2. Mostrar expedientes");
-                Console.WriteLine("3. Buscar expediente");
-                Console.WriteLine("4. Ordenar expedientes");
-                Console.WriteLine("5. Estado del expediente");
-                Console.WriteLine("0. Salir del sistema");
-                Console.WriteLine("=========================================");
-                Console.WriteLine("Expedientes registrados: " + totalRegistros);
-                Console.Write("Seleccione una opción: ");
+                // FONDO AZUL INSTITUCIONAL
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.Clear();
+
+                // ENCABEZADO
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("       ===========================================");
+                Console.WriteLine("              MESA DE PARTES DIGITAL");
+                Console.WriteLine("                       UNC");
+                Console.WriteLine("       ===========================================");
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("          SISTEMA DE GESTION DOCUMENTARIA");
+                Console.WriteLine();
+
+                // TITULO DEL MENU
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("                 MENU PRINCIPAL");
+                Console.WriteLine("       -------------------------------------------");
+                Console.WriteLine();
+
+                // OPCION 1
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("          [1] ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Registrar expediente");
+
+                // OPCION 2
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("          [2] ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Mostrar expedientes");
+
+                // OPCION 3
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("          [3] ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Buscar expediente");
+
+                // OPCION 4
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("          [4] ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Ordenar expedientes");
+
+                // OPCION 5
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.Write("          [5] ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Estado del expediente");
+
+                Console.WriteLine();
+
+                // OPCION SALIR
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          [0] ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("Salir del sistema");
+
+                Console.WriteLine();
+
+                // SEPARADOR
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("       ===========================================");
+
+                // TOTAL DE EXPEDIENTES
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("          Expedientes registrados: ");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine(totalRegistros);
+
+                Console.WriteLine();
+
+                // INGRESO DE OPCION
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("          Seleccione una opcion: ");
+
+                Console.ResetColor();
 
                 opcion = Convert.ToInt32(Console.ReadLine());
 
+                // PROCESAMIENTO DE OPCIONES
                 switch (opcion)
                 {
                     case 1:
@@ -70,25 +142,34 @@ namespace MesaDePartesDigital
 
                     case 0:
                         Console.WriteLine();
-                        Console.WriteLine("Cerrando sesión del sistema...");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine("Cerrando sesion del sistema...");
+                        Console.ResetColor();
                         break;
 
                     default:
                         Console.WriteLine();
-                        Console.WriteLine("Opción inválida.");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Opcion invalida.");
+                        Console.ResetColor();
                         break;
                 }
 
                 if (opcion != 0)
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Presione cualquier tecla para volver al menú...");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Presione cualquier tecla para volver al menu...");
+                    Console.ResetColor();
                     Console.ReadKey();
                 }
 
             } while (opcion != 0);
+
+            Console.ResetColor();
         }
 
+        // REGISTRAR EXPEDIENTE
         static void RegistrarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, ref int totalRegistros)
         {
             Console.WriteLine();
@@ -108,6 +189,7 @@ namespace MesaDePartesDigital
                 Console.Write("Ingrese DNI del remitente (8 dígitos): ");
                 dniIngresado = Console.ReadLine();
 
+                // VALIDACION DESDE LA BIBLIOTECA
                 dniValido = Expedientes.EsDniValido(dniIngresado);
 
                 if (!dniValido)
@@ -171,6 +253,7 @@ namespace MesaDePartesDigital
 
             } while (string.IsNullOrWhiteSpace(asuntoIngresado));
 
+            // GENERAR CODIGO DESDE LA BIBLIOTECA
             string codigoGenerado = Expedientes.GenerarCodigo(totalRegistros);
 
             codigos[totalRegistros] = codigoGenerado;
@@ -187,6 +270,7 @@ namespace MesaDePartesDigital
             Console.WriteLine("Código asignado: " + codigoGenerado);
         }
 
+        // MOSTRAR EXPEDIENTES
         static void MostrarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
             Console.Clear();
@@ -215,6 +299,7 @@ namespace MesaDePartesDigital
             }
         }
 
+        // BUSCAR EXPEDIENTE
         static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
             string codigoBuscado;
@@ -267,6 +352,7 @@ namespace MesaDePartesDigital
             }
         }
 
+        // ORDENAR EXPEDIENTES
         static void OrdenarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
             Console.Clear();
@@ -318,56 +404,92 @@ namespace MesaDePartesDigital
             }
         }
 
+
+        // ACTUALIZAR ESTADO
         static void ActualizarEstado(string[] codigos, string[] estados, int totalRegistros)
         {
             string codigoBuscado;
-            bool encontrado;
-            int i, pos, opEst;
+            int pos = -1, opEst = 0;
 
             Console.Clear();
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Clear();
 
-            Console.WriteLine("==============================================");
-            Console.WriteLine("           ACTUALIZAR ESTADO");
-            Console.WriteLine("==============================================");
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("       ===========================================");
+            Console.WriteLine("                MESA DE PARTES DIGITAL");
+            Console.WriteLine("                         UNC");
+            Console.WriteLine("       ===========================================");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
+            Console.WriteLine();
+
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("                 ACTUALIZAR ESTADO");
+            Console.WriteLine("       -------------------------------------------");
+            Console.WriteLine();
 
             if (totalRegistros == 0)
             {
-                Console.WriteLine("No hay expedientes en el sistema.");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("          No hay expedientes en el sistema.");
             }
             else
             {
-                Console.Write("Ingrese el código del expediente: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("          Ingrese el código del expediente: ");
+
                 codigoBuscado = Console.ReadLine();
 
-                encontrado = false;
-                pos = -1;
-
-                for (i = 0; i < totalRegistros; i++)
+                for (int i = 0; i < totalRegistros; i++)
                 {
-                    if (codigos[i].ToUpper() == codigoBuscado.ToUpper())
+                    if (codigos[i].Equals(codigoBuscado,
+                        StringComparison.OrdinalIgnoreCase))
                     {
-                        encontrado = true;
                         pos = i;
                         break;
                     }
                 }
 
-                if (!encontrado)
+                if (pos == -1)
                 {
-                    Console.WriteLine("No se encontró el expediente.");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine();
+                    Console.WriteLine("          No se encontró el expediente.");
                 }
                 else
                 {
-                    Console.WriteLine("\nEstado actual: " + estados[pos]);
-                    Console.WriteLine("\nSeleccione el nuevo estado:");
-                    Console.WriteLine("1. EN REVISIÓN");
-                    Console.WriteLine("2. DERIVADO A OFICINA");
-                    Console.WriteLine("3. FINALIZADO / ATENDIDO");
-                    Console.WriteLine("4. ARCHIVADO");
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("       -------------------------------------------");
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("          CODIGO: " + codigos[pos]);
+                    Console.WriteLine("          ESTADO ACTUAL: " + estados[pos]);
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("       -------------------------------------------");
+                    Console.WriteLine();
+                    Console.WriteLine("              SELECCIONE EL NUEVO ESTADO");
+                    Console.WriteLine();
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine("          [1] EN REVISION");
+                    Console.WriteLine("          [2] DERIVADO A OFICINA");
+                    Console.WriteLine("          [3] FINALIZADO / ATENDIDO");
+                    Console.WriteLine("          [4] ARCHIVADO");
+
+                    Console.WriteLine();
 
                     do
                     {
-                        Console.Write("Opción (1-4): ");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write("          Seleccione una opcion: ");
+
+                        Console.ForegroundColor = ConsoleColor.White;
 
                         if (!int.TryParse(Console.ReadLine(), out opEst))
                         {
@@ -376,7 +498,8 @@ namespace MesaDePartesDigital
 
                         if (opEst < 1 || opEst > 4)
                         {
-                            Console.WriteLine("Error: opción no válida.");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("          Opcion no valida. Intente nuevamente.");
                         }
 
                     } while (opEst < 1 || opEst > 4);
@@ -384,7 +507,7 @@ namespace MesaDePartesDigital
                     switch (opEst)
                     {
                         case 1:
-                            estados[pos] = "EN REVISIÓN";
+                            estados[pos] = "EN REVISION";
                             break;
 
                         case 2:
@@ -400,10 +523,22 @@ namespace MesaDePartesDigital
                             break;
                     }
 
-                    Console.WriteLine("\nEstado actualizado correctamente.");
-                    Console.WriteLine("Nuevo estado: " + estados[pos]);
+                    Console.WriteLine();
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("       ===========================================");
+                    Console.WriteLine("               ESTADO ACTUALIZADO");
+                    Console.WriteLine("       ===========================================");
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    Console.WriteLine("          Codigo: " + codigos[pos]);
+                    Console.WriteLine("          Nuevo estado: " + estados[pos]);
                 }
             }
+
+            Console.ResetColor();
         }
     }
 }
+
