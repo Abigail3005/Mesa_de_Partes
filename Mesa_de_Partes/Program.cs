@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,90 +23,56 @@ namespace MesaDePartesDigital
 
             do
             {
+                Console.BackgroundColor = ConsoleColor.Black;
                 Console.Clear();
 
-                // FONDO AZUL INSTITUCIONAL
-                Console.BackgroundColor = ConsoleColor.Blue;
-                Console.Clear();
-
-                // ENCABEZADO
+                // ENCABEZADO AZUL MEDIO EN NEGRITA
+                Console.Write("\u001b[1;38;2;55;110;180m");
                 Console.WriteLine();
-
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("       ===========================================");
                 Console.WriteLine("              MESA DE PARTES DIGITAL");
-                Console.WriteLine("                       UNC");
+                Console.WriteLine("                         UNC");
                 Console.WriteLine("       ===========================================");
+                Console.Write("\u001b[0m");
 
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("          SISTEMA DE GESTION DOCUMENTARIA");
                 Console.WriteLine();
 
-                // TITULO DEL MENU
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                // MENU PRINCIPAL
+                Console.Write("\u001b[1;38;2;55;110;180m");
                 Console.WriteLine("                 MENU PRINCIPAL");
                 Console.WriteLine("       -------------------------------------------");
+                Console.Write("\u001b[0m");
                 Console.WriteLine();
 
-                // OPCION 1
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("          [1] ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Registrar expediente");
+                Console.Write("\u001b[1;37m");
+                Console.WriteLine("          [1] REGISTRAR EXPEDIENTE");
+                Console.WriteLine("          [2] MOSTRAR EXPEDIENTES");
+                Console.WriteLine("          [3] BUSCAR EXPEDIENTE");
+                Console.WriteLine("          [4] ORDENAR EXPEDIENTES");
+                Console.Write("\u001b[0m");
 
-                // OPCION 2
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("          [2] ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Mostrar expedientes");
-
-                // OPCION 3
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("          [3] ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Buscar expediente");
-
-                // OPCION 4
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("          [4] ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Ordenar expedientes");
-
-                // OPCION 5
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-                Console.Write("          [5] ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Estado del expediente");
-
-                Console.WriteLine();
-
-                // OPCION SALIR
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("          [0] ");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("Salir del sistema");
+                Console.WriteLine("          [5] ESTADO DEL EXPEDIENTE");
 
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("          [0] SALIR DEL SISTEMA");
+
+                Console.Write("\u001b[1;38;2;55;110;180m");
                 Console.WriteLine();
-
-                // SEPARADOR
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("       ===========================================");
-
-                // TOTAL DE EXPEDIENTES
-                Console.WriteLine();
+                Console.Write("\u001b[0m");
 
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("          Expedientes registrados: ");
+                Console.Write("          EXPEDIENTES REGISTRADOS: ");
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine(totalRegistros);
-
                 Console.WriteLine();
 
-                // INGRESO DE OPCION
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("          Seleccione una opcion: ");
-
+                Console.Write("          SELECCIONE UNA OPCION: ");
                 Console.ResetColor();
 
                 opcion = Convert.ToInt32(Console.ReadLine());
@@ -404,37 +369,37 @@ namespace MesaDePartesDigital
             }
         }
 
-
         // ACTUALIZAR ESTADO
         static void ActualizarEstado(string[] codigos, string[] estados, int totalRegistros)
         {
             string codigoBuscado;
             int pos = -1, opEst = 0;
 
-            Console.Clear();
-            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
 
+            // ENCABEZADO AZUL MEDIO EN NEGRITA
+            Console.Write("\u001b[1;38;2;55;110;180m");
             Console.WriteLine();
-
-            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("       ===========================================");
-            Console.WriteLine("                MESA DE PARTES DIGITAL");
+            Console.WriteLine("              MESA DE PARTES DIGITAL");
             Console.WriteLine("                         UNC");
             Console.WriteLine("       ===========================================");
+            Console.Write("\u001b[0m");
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
             Console.WriteLine();
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("\u001b[1;38;2;55;110;180m");
             Console.WriteLine("                 ACTUALIZAR ESTADO");
             Console.WriteLine("       -------------------------------------------");
+            Console.Write("\u001b[0m");
             Console.WriteLine();
 
             if (totalRegistros == 0)
             {
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("          No hay expedientes en el sistema.");
             }
             else
@@ -463,17 +428,19 @@ namespace MesaDePartesDigital
                 else
                 {
                     Console.WriteLine();
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("\u001b[1;38;2;55;110;180m");
                     Console.WriteLine("       -------------------------------------------");
+                    Console.Write("\u001b[0m");
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine("          CODIGO: " + codigos[pos]);
                     Console.WriteLine("          ESTADO ACTUAL: " + estados[pos]);
 
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("\u001b[1;38;2;55;110;180m");
                     Console.WriteLine("       -------------------------------------------");
                     Console.WriteLine();
                     Console.WriteLine("              SELECCIONE EL NUEVO ESTADO");
+                    Console.Write("\u001b[0m");
                     Console.WriteLine();
 
                     Console.ForegroundColor = ConsoleColor.White;
@@ -525,10 +492,12 @@ namespace MesaDePartesDigital
 
                     Console.WriteLine();
 
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("\u001b[1m");
                     Console.WriteLine("       ===========================================");
                     Console.WriteLine("               ESTADO ACTUALIZADO");
                     Console.WriteLine("       ===========================================");
+                    Console.Write("\u001b[0m");
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine();
@@ -541,4 +510,3 @@ namespace MesaDePartesDigital
         }
     }
 }
-
