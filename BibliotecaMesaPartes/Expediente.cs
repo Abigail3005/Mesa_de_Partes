@@ -285,7 +285,7 @@ namespace BibliotecaMesaPartes
             else
             {
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("          Ingrese el código del expediente: ");
+                Console.Write("          Ingrese el código del expediente (EXP-2026-001): ");
 
                 codigoBuscado = Console.ReadLine();
 
