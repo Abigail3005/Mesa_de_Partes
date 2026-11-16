@@ -18,7 +18,7 @@ namespace MesaDePartesDigital
             string[] asuntos = new string[100];
             string[] estados = new string[100];
 
-            int totalRegistros = 0;
+            int totalRegistros = Expedientes.CargarExpedientes(codigos, DNI, remitentes, tiposDoc, asuntos, estados); 
             int opcion;
 
             do
@@ -50,8 +50,10 @@ namespace MesaDePartesDigital
                 Console.WriteLine("          [1] REGISTRAR EXPEDIENTE");
                 Console.WriteLine("          [2] MOSTRAR EXPEDIENTES");
                 Console.WriteLine("          [3] BUSCAR EXPEDIENTE");
-                Console.WriteLine("          [4] ORDENAR EXPEDIENTES");
                 Console.Write("\u001b[0m");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("          [4] ORDENAR EXPEDIENTES");
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("          [5] ESTADO DEL EXPEDIENTE");
@@ -96,13 +98,13 @@ namespace MesaDePartesDigital
                         break;
 
                     case 4:
-                        OrdenarExpedientes
-                        (codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
+                        Expedientes.OrdenarExpedientes(codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
+                        Expedientes.ActualizarArchivo(codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
                         break;
 
                     case 5:
-                        ActualizarEstado
-                        (codigos, estados, totalRegistros);
+                        Expedientes.ActualizarEstado(codigos, estados, totalRegistros, DNI, remitentes, tiposDoc, asuntos);
+                        Expedientes.ActualizarArchivo(codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
                         break;
 
                     case 0:
@@ -229,6 +231,8 @@ namespace MesaDePartesDigital
             estados[totalRegistros] = "RECIBIDO";
 
             totalRegistros++;
+            string registro = codigos[totalRegistros - 1] + "|" + DNI[totalRegistros - 1] + "|" + remitentes[totalRegistros - 1] + "|" + tiposDoc[totalRegistros - 1] + "|" + asuntos[totalRegistros - 1] + "|" + estados[totalRegistros - 1];
+            Expedientes.GuardarExpedientes(registro);
 
             Console.WriteLine();
             Console.WriteLine("Expediente registrado con éxito.");
@@ -317,196 +321,5 @@ namespace MesaDePartesDigital
             }
         }
 
-        // ORDENAR EXPEDIENTES
-        static void OrdenarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
-        {
-            Console.Clear();
-
-            Console.WriteLine("==========================================================");
-            Console.WriteLine("             ORDENAR EXPEDIENTES POR CÓDIGO");
-            Console.WriteLine("==========================================================");
-
-            if (totalRegistros <= 1)
-            {
-                Console.WriteLine("No hay suficientes expedientes para ordenar.");
-            }
-            else
-            {
-                for (int i = 0; i < totalRegistros - 1; i++)
-                {
-                    for (int j = 0; j < totalRegistros - 1 - i; j++)
-                    {
-                        if (codigos[j].CompareTo(codigos[j + 1]) > 0)
-                        {
-                            string auxCod = codigos[j];
-                            codigos[j] = codigos[j + 1];
-                            codigos[j + 1] = auxCod;
-
-                            string auxDni = DNI[j];
-                            DNI[j] = DNI[j + 1];
-                            DNI[j + 1] = auxDni;
-
-                            string auxRem = remitentes[j];
-                            remitentes[j] = remitentes[j + 1];
-                            remitentes[j + 1] = auxRem;
-
-                            string auxTipo = tiposDoc[j];
-                            tiposDoc[j] = tiposDoc[j + 1];
-                            tiposDoc[j + 1] = auxTipo;
-
-                            string auxAsu = asuntos[j];
-                            asuntos[j] = asuntos[j + 1];
-                            asuntos[j + 1] = auxAsu;
-
-                            string auxEst = estados[j];
-                            estados[j] = estados[j + 1];
-                            estados[j + 1] = auxEst;
-                        }
-                    }
-                }
-
-                Console.WriteLine("Expedientes ordenados correctamente.");
-            }
-        }
-
-        // ACTUALIZAR ESTADO
-        static void ActualizarEstado(string[] codigos, string[] estados, int totalRegistros)
-        {
-            string codigoBuscado;
-            int pos = -1, opEst = 0;
-
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Clear();
-
-            // ENCABEZADO AZUL MEDIO EN NEGRITA
-            Console.Write("\u001b[1;38;2;55;110;180m");
-            Console.WriteLine();
-            Console.WriteLine("       ===========================================");
-            Console.WriteLine("              MESA DE PARTES DIGITAL");
-            Console.WriteLine("                         UNC");
-            Console.WriteLine("       ===========================================");
-            Console.Write("\u001b[0m");
-
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
-            Console.WriteLine();
-
-            Console.Write("\u001b[1;38;2;55;110;180m");
-            Console.WriteLine("                 ACTUALIZAR ESTADO");
-            Console.WriteLine("       -------------------------------------------");
-            Console.Write("\u001b[0m");
-            Console.WriteLine();
-
-            if (totalRegistros == 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("          No hay expedientes en el sistema.");
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("          Ingrese el código del expediente: ");
-
-                codigoBuscado = Console.ReadLine();
-
-                for (int i = 0; i < totalRegistros; i++)
-                {
-                    if (codigos[i].Equals(codigoBuscado,
-                        StringComparison.OrdinalIgnoreCase))
-                    {
-                        pos = i;
-                        break;
-                    }
-                }
-
-                if (pos == -1)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine();
-                    Console.WriteLine("          No se encontró el expediente.");
-                }
-                else
-                {
-                    Console.WriteLine();
-                    Console.Write("\u001b[1;38;2;55;110;180m");
-                    Console.WriteLine("       -------------------------------------------");
-                    Console.Write("\u001b[0m");
-
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("          CODIGO: " + codigos[pos]);
-                    Console.WriteLine("          ESTADO ACTUAL: " + estados[pos]);
-
-                    Console.Write("\u001b[1;38;2;55;110;180m");
-                    Console.WriteLine("       -------------------------------------------");
-                    Console.WriteLine();
-                    Console.WriteLine("              SELECCIONE EL NUEVO ESTADO");
-                    Console.Write("\u001b[0m");
-                    Console.WriteLine();
-
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine("          [1] EN REVISION");
-                    Console.WriteLine("          [2] DERIVADO A OFICINA");
-                    Console.WriteLine("          [3] FINALIZADO / ATENDIDO");
-                    Console.WriteLine("          [4] ARCHIVADO");
-
-                    Console.WriteLine();
-
-                    do
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.Write("          Seleccione una opcion: ");
-
-                        Console.ForegroundColor = ConsoleColor.White;
-
-                        if (!int.TryParse(Console.ReadLine(), out opEst))
-                        {
-                            opEst = 0;
-                        }
-
-                        if (opEst < 1 || opEst > 4)
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("          Opcion no valida. Intente nuevamente.");
-                        }
-
-                    } while (opEst < 1 || opEst > 4);
-
-                    switch (opEst)
-                    {
-                        case 1:
-                            estados[pos] = "EN REVISION";
-                            break;
-
-                        case 2:
-                            estados[pos] = "DERIVADO A OFICINA";
-                            break;
-
-                        case 3:
-                            estados[pos] = "FINALIZADO / ATENDIDO";
-                            break;
-
-                        case 4:
-                            estados[pos] = "ARCHIVADO";
-                            break;
-                    }
-
-                    Console.WriteLine();
-
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("\u001b[1m");
-                    Console.WriteLine("       ===========================================");
-                    Console.WriteLine("               ESTADO ACTUALIZADO");
-                    Console.WriteLine("       ===========================================");
-                    Console.Write("\u001b[0m");
-
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine();
-                    Console.WriteLine("          Codigo: " + codigos[pos]);
-                    Console.WriteLine("          Nuevo estado: " + estados[pos]);
-                }
-            }
-
-            Console.ResetColor();
-        }
     }
 }
