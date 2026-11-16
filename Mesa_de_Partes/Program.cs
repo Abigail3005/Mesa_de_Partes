@@ -225,35 +225,6 @@ namespace MesaDePartesDigital
             Console.WriteLine("Código asignado: " + codigoGenerado);
         }
 
-        // MOSTRAR EXPEDIENTES
-        static void MostrarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
-        {
-            Console.Clear();
-
-            Console.WriteLine("================================================================================");
-            Console.WriteLine("                        LISTA TOTAL DE EXPEDIENTES                              ");
-            Console.WriteLine("================================================================================");
-
-            if (totalRegistros == 0)
-            {
-                Console.WriteLine("No existen expedientes registrados en el sistema.");
-            }
-            else
-            {
-                for (int i = 0; i < totalRegistros; i++)
-                {
-                    Console.WriteLine("--------------------------------------------------------------------------------");
-                    Console.WriteLine($"CÓDIGO: {codigos[i]}  |  ESTADO: {estados[i]}");
-                    Console.WriteLine($"REMITENTE: {remitentes[i]}  |  DNI: {DNI[i]}");
-                    Console.WriteLine($"TIPO: {tiposDoc[i]}");
-                    Console.WriteLine($"ASUNTO: {asuntos[i]}");
-                }
-
-                Console.WriteLine("--------------------------------------------------------------------------------");
-                Console.WriteLine($"Total registrados: {totalRegistros}");
-            }
-        }
-
         // BUSCAR EXPEDIENTE
         static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
