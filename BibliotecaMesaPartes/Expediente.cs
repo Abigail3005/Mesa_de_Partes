@@ -86,6 +86,91 @@ namespace BibliotecaMesaPartes
                 Console.Write("\u001b[0m");
             }
         }
+
+        // BUSCAR EXPEDIENTE
+        public static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
+        {
+            string codigoBuscado;
+            int pos = -1;
+
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Clear();
+
+            // ENCABEZADO INSTITUCIONAL
+            Console.Write("\u001b[1;38;2;7;84;154m");
+            Console.WriteLine();
+            Console.WriteLine("       ===========================================");
+            Console.WriteLine("              MESA DE PARTES DIGITAL");
+            Console.WriteLine("                         UNC");
+            Console.WriteLine("       ===========================================");
+            Console.Write("\u001b[0m");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
+            Console.WriteLine();
+
+            // TITULO
+            Console.Write("\u001b[1;38;2;7;84;154m");
+            Console.WriteLine("                  BUSCAR EXPEDIENTE");
+            Console.WriteLine("       -------------------------------------------");
+            Console.Write("\u001b[0m");
+
+            if (totalRegistros == 0)
+            {
+                Console.Write("\u001b[1;38;2;201;46;22m");
+                Console.WriteLine("          No hay expedientes en el sistema.");
+                Console.Write("\u001b[0m");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("          Ingrese el codigo del expediente: ");
+                codigoBuscado = Console.ReadLine();
+
+                for (int i = 0; i < totalRegistros; i++)
+                {
+                    if (codigos[i].Equals(codigoBuscado, StringComparison.OrdinalIgnoreCase))
+                    {
+                        pos = i;
+                        break;
+                    }
+                }
+
+                if (pos != -1)
+                {
+                    Console.WriteLine();
+
+                    Console.Write("\u001b[1;38;2;208;184;63m");
+                    Console.WriteLine("       ===========================================");
+                    Console.WriteLine("                EXPEDIENTE ENCONTRADO");
+                    Console.WriteLine("       ===========================================");
+                    Console.Write("\u001b[0m");
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    Console.WriteLine("          CODIGO: " + codigos[pos]);
+                    Console.WriteLine("          DNI: " + DNI[pos]);
+                    Console.WriteLine("          REMITENTE: " + remitentes[pos]);
+                    Console.WriteLine("          TIPO: " + tiposDoc[pos]);
+                    Console.WriteLine("          ASUNTO: " + asuntos[pos]);
+                    Console.WriteLine("          ESTADO: " + estados[pos]);
+
+                    Console.Write("\u001b[1;38;2;208;184;63m");
+                    Console.WriteLine("       ===========================================");
+                    Console.Write("\u001b[0m");
+                }
+                else
+                {
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine();
+                    Console.WriteLine("          No se encontro el expediente.");
+                    Console.Write("\u001b[0m");
+                }
+            }
+
+            Console.ResetColor();
+        }
+
         // ACTUALIZAR ESTADO
         public static void ActualizarEstado(string[] codigos, string[] estados, int totalRegistros, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos)
         {
