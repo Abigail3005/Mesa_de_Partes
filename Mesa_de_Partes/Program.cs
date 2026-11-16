@@ -24,18 +24,43 @@ namespace MesaDePartesDigital
             {
                 Console.Clear();
 
-                Console.WriteLine("================================");
-                Console.WriteLine("  MESA DE PARTES DIGITAL - UNC  ");
-                Console.WriteLine("================================");
-                Console.WriteLine("1. Registrar expediente");
-                Console.WriteLine("2. Mostrar expedientes");
-                Console.WriteLine("3. Buscar expediente");
-                Console.WriteLine("4. Ordenar expedientes");
-                Console.WriteLine("5. Estado del expediente");
-                Console.WriteLine("0. Salir del sistema");
-                Console.WriteLine("=========================================");
-                Console.WriteLine("Expedientes registrados: " + totalRegistros);
-                Console.Write("Seleccione una opción: ");
+                // ENCABEZADO AZUL MEDIO EN NEGRITA
+                Console.Write("\u001b[1;38;2;55;110;180m");
+                Console.WriteLine();
+                Console.WriteLine("       ===========================================");
+                Console.WriteLine("              MESA DE PARTES DIGITAL");
+                Console.WriteLine("                         UNC");
+                Console.WriteLine("       ===========================================");
+                Console.Write("\u001b[0m");
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("          SISTEMA DE GESTION DOCUMENTARIA");
+                Console.WriteLine();
+
+                // MENU PRINCIPAL
+                Console.Write("\u001b[1;38;2;55;110;180m");
+                Console.WriteLine("                 MENU PRINCIPAL");
+                Console.WriteLine("       -------------------------------------------");
+                Console.Write("\u001b[0m");
+                Console.WriteLine();
+
+                Console.Write("\u001b[1;37m");
+                Console.WriteLine("          [1] REGISTRAR EXPEDIENTE");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("          [2] MOSTRAR EXPEDIENTES");
+
+                Console.WriteLine("          [3] BUSCAR EXPEDIENTE");
+                Console.Write("\u001b[0m");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("          [4] ORDENAR EXPEDIENTES");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("          [5] ESTADO DEL EXPEDIENTE");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("          [0] SALIR DEL SISTEMA");
 
                 opcion = Convert.ToInt32(Console.ReadLine());
 
@@ -47,8 +72,7 @@ namespace MesaDePartesDigital
                         break;
 
                     case 2:
-                        MostrarExpedientes
-                        (codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
+                        Expedientes.MostrarExpedientes(codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
                         break;
 
                     case 3:
