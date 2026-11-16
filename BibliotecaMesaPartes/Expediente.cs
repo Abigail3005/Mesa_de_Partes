@@ -87,6 +87,84 @@ namespace BibliotecaMesaPartes
             }
         }
 
+        // MOSTRAR EXPEDIENTES
+        public static void MostrarExpedientes(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Clear();
+
+            Console.Write("\u001b[1;38;2;253;185;19m");
+            Console.WriteLine("================================================================================");
+            Console.WriteLine("                            LISTA TOTAL DE EXPEDIENTES                          ");
+            Console.WriteLine("================================================================================");
+            Console.Write("\u001b[0m");
+            Console.WriteLine();
+
+            if (totalRegistros == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("          No existen expedientes registrados en el sistema.");
+                Console.ResetColor();
+            }
+            else
+            {
+                for (int i = 0; i < totalRegistros; i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine("--------------------------------------------------------------------------------");
+
+                    // Fila 1: Código y Estado
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("  CÓDIGO: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($"{codigos[i],-20}");
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(" |  ESTADO: ");
+
+                    if (estados[i] == "RECIBIDO") Console.ForegroundColor = ConsoleColor.Green;
+                    else if (estados[i] == "EN REVISION") Console.ForegroundColor = ConsoleColor.Yellow;
+                    else if (estados[i] == "DERIVADO A OFICINA") Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    else if (estados[i] == "FINALIZADO / ATENDIDO") Console.ForegroundColor = ConsoleColor.Cyan;
+                    else if (estados[i] == "ARCHIVADO") Console.ForegroundColor = ConsoleColor.DarkGray;
+                    else Console.ForegroundColor = ConsoleColor.White;
+
+                    Console.WriteLine(estados[i]);
+
+                    // Fila 2: Remitente y DNI
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("  REMITENTE: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write($"{remitentes[i],-17}");
+
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(" |  DNI: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(DNI[i]);
+
+                    // Fila 3: Tipo
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("  TIPO: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(tiposDoc[i]);
+
+                    // Fila 4: Asunto
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("  ASUNTO: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(asuntos[i]);
+                }
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine("--------------------------------------------------------------------------------");
+
+                // Pie de lista
+                Console.Write("\u001b[1;38;2;253;185;19m");
+                Console.WriteLine($"  Total registrados: {totalRegistros}");
+                Console.ResetColor();
+            }
+        }
+
         // BUSCAR EXPEDIENTE
         public static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {

@@ -48,7 +48,10 @@ namespace MesaDePartesDigital
 
                 Console.Write("\u001b[1;37m");
                 Console.WriteLine("          [1] REGISTRAR EXPEDIENTE");
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("          [2] MOSTRAR EXPEDIENTES");
+
                 Console.WriteLine("          [3] BUSCAR EXPEDIENTE");
                 Console.Write("\u001b[0m");
 
@@ -61,22 +64,6 @@ namespace MesaDePartesDigital
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("          [0] SALIR DEL SISTEMA");
 
-                Console.Write("\u001b[1;38;2;55;110;180m");
-                Console.WriteLine();
-                Console.WriteLine("       ===========================================");
-                Console.Write("\u001b[0m");
-
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("          EXPEDIENTES REGISTRADOS: ");
-
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(totalRegistros);
-                Console.WriteLine();
-
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("          SELECCIONE UNA OPCION: ");
-                Console.ResetColor();
-
                 opcion = Convert.ToInt32(Console.ReadLine());
 
                 // PROCESAMIENTO DE OPCIONES
@@ -88,8 +75,7 @@ namespace MesaDePartesDigital
                         break;
 
                     case 2:
-                        MostrarExpedientes
-                        (codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
+                        Expedientes.MostrarExpedientes(codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
                         break;
 
                     case 3:
