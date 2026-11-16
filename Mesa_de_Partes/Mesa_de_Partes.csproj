@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BibliotecaMesaPartes\BibliotecaMesaPartes.csproj">
+      <Project>{367a4a67-6546-44aa-b64d-353d879a7afd}</Project>
+      <Name>BibliotecaMesaPartes</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
