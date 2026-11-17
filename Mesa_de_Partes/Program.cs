@@ -78,7 +78,7 @@ namespace MesaDePartesDigital
                         break;
 
                     case 3:
-                        BuscarExpediente
+                        Expedientes.BuscarExpediente
                         (codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
                         break;
 
@@ -120,59 +120,5 @@ namespace MesaDePartesDigital
 
             Console.ResetColor();
         }
-
-        // BUSCAR EXPEDIENTE
-        static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
-        {
-            string codigoBuscado;
-            bool encontrado;
-            int i, pos;
-
-            Console.Clear();
-
-            Console.WriteLine("==========================================================");
-            Console.WriteLine("               BÚSQUEDA DE EXPEDIENTE");
-            Console.WriteLine("==========================================================");
-
-            if (totalRegistros == 0)
-            {
-                Console.WriteLine("No hay expedientes cargados en el sistema.");
-            }
-            else
-            {
-                Console.Write("Ingrese el código a buscar (ejemplo EXP-2026-001): ");
-                codigoBuscado = Console.ReadLine();
-
-                encontrado = false;
-                pos = -1;
-
-                for (i = 0; i < totalRegistros; i++)
-                {
-                    if (codigos[i].ToUpper() == codigoBuscado.ToUpper())
-                    {
-                        encontrado = true;
-                        pos = i;
-                    }
-                }
-
-                if (encontrado)
-                {
-                    Console.WriteLine("----------------------------------------------------------");
-                    Console.WriteLine(">> EXPEDIENTE ENCONTRADO <<");
-                    Console.WriteLine("Código: " + codigos[pos]);
-                    Console.WriteLine("DNI: " + DNI[pos]);
-                    Console.WriteLine("Remitente: " + remitentes[pos]);
-                    Console.WriteLine("Tipo: " + tiposDoc[pos]);
-                    Console.WriteLine("Asunto: " + asuntos[pos]);
-                    Console.WriteLine("Estado actual: " + estados[pos]);
-                    Console.WriteLine("----------------------------------------------------------");
-                }
-                else
-                {
-                    Console.WriteLine(">> No se encontró ningún expediente con el código: " + codigoBuscado);
-                }
-            }
-        }
-
     }
 }

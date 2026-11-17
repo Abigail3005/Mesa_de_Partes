@@ -365,7 +365,7 @@ namespace BibliotecaMesaPartes
             Console.WriteLine("       ===========================================");
             Console.Write("\u001b[0m");
 
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
             Console.WriteLine();
 
@@ -383,7 +383,7 @@ namespace BibliotecaMesaPartes
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write("          Ingrese el codigo del expediente: ");
                 codigoBuscado = Console.ReadLine();
 
@@ -406,7 +406,7 @@ namespace BibliotecaMesaPartes
                     Console.WriteLine("       ===========================================");
                     Console.Write("\u001b[0m");
 
-                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine();
                     Console.WriteLine("          CODIGO: " + codigos[pos]);
                     Console.WriteLine("          DNI: " + DNI[pos]);
