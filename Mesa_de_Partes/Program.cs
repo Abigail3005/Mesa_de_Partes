@@ -18,7 +18,7 @@ namespace MesaDePartesDigital
             string[] asuntos = new string[100];
             string[] estados = new string[100];
 
-            int totalRegistros = Expedientes.CargarExpedientes(codigos, DNI, remitentes, tiposDoc, asuntos, estados); 
+            int totalRegistros = Expedientes.CargarExpedientes(codigos, DNI, remitentes, tiposDoc, asuntos, estados);
             int opcion;
 
             do
@@ -125,21 +125,49 @@ namespace MesaDePartesDigital
         // REGISTRAR EXPEDIENTE
         static void RegistrarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, ref int totalRegistros)
         {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Clear();
+
+            // ENCABEZADO INSTITUCIONAL (AZUL UNIVERSITARIO)
+            Console.Write("\u001b[1;38;2;7;84;154m");
             Console.WriteLine();
-            Console.WriteLine("---- REGISTRAR NUEVO EXPEDIENTE ----");
+            Console.WriteLine("       ===========================================");
+            Console.WriteLine("              MESA DE PARTES DIGITAL");
+            Console.WriteLine("                         UNC");
+            Console.WriteLine("       ===========================================");
+            Console.Write("\u001b[0m");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
+            Console.WriteLine();
+
+            // TITULO
+            Console.Write("\u001b[1;38;2;7;84;154m");
+            Console.WriteLine("               REGISTRAR NUEVO EXPEDIENTE");
+            Console.WriteLine("       -------------------------------------------");
+            Console.Write("\u001b[0m");
+            Console.WriteLine();
 
             if (totalRegistros >= codigos.Length)
             {
-                Console.WriteLine("No se pueden registrar más expedientes. Capacidad máxima alcanzada.");
+                Console.Write("\u001b[1;38;2;201;46;22m");
+                Console.WriteLine("          No se pueden registrar mas expedientes.");
+                Console.WriteLine("          Capacidad maxima alcanzada.");
+                Console.Write("\u001b[0m");
+                Console.ResetColor();
                 return;
             }
 
+            // DNI DEL REMITENTE
             string dniIngresado;
             bool dniValido;
 
             do
             {
-                Console.Write("Ingrese DNI del remitente (8 dígitos): ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          Ingrese DNI del remitente (8 digitos): ");
+                Console.ForegroundColor = ConsoleColor.White;
+
                 dniIngresado = Console.ReadLine();
 
                 // VALIDACION DESDE LA BIBLIOTECA
@@ -147,25 +175,34 @@ namespace MesaDePartesDigital
 
                 if (!dniValido)
                 {
-                    Console.WriteLine("DNI inválido. Debe contener exactamente 8 números.");
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine("          DNI invalido. Debe contener exactamente 8 numeros.");
+                    Console.Write("\u001b[0m");
                 }
 
             } while (!dniValido);
 
+            // NOMBRE DEL REMITENTE
             string remitenteIngresado;
 
             do
             {
-                Console.Write("Ingrese nombre completo del remitente: ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          Ingrese nombre completo del remitente: ");
+                Console.ForegroundColor = ConsoleColor.White;
+
                 remitenteIngresado = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(remitenteIngresado))
                 {
-                    Console.WriteLine("El nombre del remitente no puede estar vacío.");
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine("          El nombre del remitente no puede estar vacio.");
+                    Console.Write("\u001b[0m");
                 }
 
             } while (string.IsNullOrWhiteSpace(remitenteIngresado));
 
+            // TIPO DE DOCUMENTO
             string[] tiposPermitidos = {
                 "OFICIO",
                 "EXPEDIENTE",
@@ -176,10 +213,23 @@ namespace MesaDePartesDigital
             string tipoIngresado;
             bool tipoValido;
 
+            Console.WriteLine();
+            Console.Write("\u001b[1;38;2;7;84;154m");
+            Console.WriteLine("              TIPOS DE DOCUMENTO DISPONIBLES");
+            Console.Write("\u001b[0m");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("          [1] OFICIO");
+            Console.WriteLine("          [2] EXPEDIENTE");
+            Console.WriteLine("          [3] DOCUMENTO EXTERNO");
+            Console.WriteLine("          [4] SOLICITUD");
+            Console.WriteLine();
+
             do
             {
-                Console.WriteLine("Tipos de documento disponibles: OFICIO, EXPEDIENTE, DOCUMENTO EXTERNO, SOLICITUD");
-                Console.Write("Ingrese tipo de documento: ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          Ingrese tipo de documento: ");
+                Console.ForegroundColor = ConsoleColor.White;
 
                 tipoIngresado = Console.ReadLine().Trim().ToUpper();
 
@@ -187,21 +237,29 @@ namespace MesaDePartesDigital
 
                 if (!tipoValido)
                 {
-                    Console.WriteLine("Tipo de documento no válido. Intente nuevamente.");
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine("          Tipo de documento no valido. Intente nuevamente.");
+                    Console.Write("\u001b[0m");
                 }
 
             } while (!tipoValido);
 
+            // ASUNTO
             string asuntoIngresado;
 
             do
             {
-                Console.Write("Ingrese asunto del documento: ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          Ingrese asunto del documento: ");
+                Console.ForegroundColor = ConsoleColor.White;
+
                 asuntoIngresado = Console.ReadLine();
 
                 if (string.IsNullOrWhiteSpace(asuntoIngresado))
                 {
-                    Console.WriteLine("El asunto no puede estar vacío.");
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine("          El asunto no puede estar vacio.");
+                    Console.Write("\u001b[0m");
                 }
 
             } while (string.IsNullOrWhiteSpace(asuntoIngresado));
@@ -220,9 +278,30 @@ namespace MesaDePartesDigital
             string registro = codigos[totalRegistros - 1] + "|" + DNI[totalRegistros - 1] + "|" + remitentes[totalRegistros - 1] + "|" + tiposDoc[totalRegistros - 1] + "|" + asuntos[totalRegistros - 1] + "|" + estados[totalRegistros - 1];
             Expedientes.GuardarExpedientes(registro);
 
+            // CONFIRMACION (DORADO INSTITUCIONAL)
             Console.WriteLine();
-            Console.WriteLine("Expediente registrado con éxito.");
-            Console.WriteLine("Código asignado: " + codigoGenerado);
+            Console.Write("\u001b[1;38;2;208;184;63m");
+            Console.WriteLine("       ===========================================");
+            Console.WriteLine("              EXPEDIENTE REGISTRADO");
+            Console.WriteLine("       ===========================================");
+            Console.Write("\u001b[0m");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
+            Console.WriteLine("          CODIGO: " + codigoGenerado);
+            Console.WriteLine("          DNI: " + dniIngresado);
+            Console.WriteLine("          REMITENTE: " + remitenteIngresado);
+            Console.WriteLine("          TIPO: " + tipoIngresado);
+            Console.WriteLine("          ASUNTO: " + asuntoIngresado);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("          ESTADO: RECIBIDO");
+
+            Console.Write("\u001b[1;38;2;208;184;63m");
+            Console.WriteLine("       ===========================================");
+            Console.Write("\u001b[0m");
+
+            Console.ResetColor();
         }
 
         // BUSCAR EXPEDIENTE
