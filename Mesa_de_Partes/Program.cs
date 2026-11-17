@@ -46,10 +46,9 @@ namespace MesaDePartesDigital
                 Console.Write("\u001b[0m");
                 Console.WriteLine();
 
-                Console.Write("\u001b[1;37m");
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("          [1] REGISTRAR EXPEDIENTE");
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("          [2] MOSTRAR EXPEDIENTES");
 
                 Console.WriteLine("          [3] BUSCAR EXPEDIENTE");
