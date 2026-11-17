@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.IO;
+using System.Linq;
 
 
 namespace BibliotecaMesaPartes
@@ -29,6 +30,187 @@ namespace BibliotecaMesaPartes
             int anioActual = DateTime.Now.Year;
 
             return "EXP-" + anioActual + "-" + numero.ToString("D3");
+        }
+
+        // REGISTRAR EXPEDIENTE
+        public static void RegistrarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, ref int totalRegistros)
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Clear();
+
+            // ENCABEZADO INSTITUCIONAL (AZUL UNIVERSITARIO)
+            Console.Write("\u001b[1;38;2;7;84;154m");
+            Console.WriteLine();
+            Console.WriteLine("       ===========================================");
+            Console.WriteLine("              MESA DE PARTES DIGITAL");
+            Console.WriteLine("                         UNC");
+            Console.WriteLine("       ===========================================");
+            Console.Write("\u001b[0m");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
+            Console.WriteLine();
+
+            // TITULO
+            Console.Write("\u001b[1;38;2;7;84;154m");
+            Console.WriteLine("               REGISTRAR NUEVO EXPEDIENTE");
+            Console.WriteLine("       -------------------------------------------");
+            Console.Write("\u001b[0m");
+            Console.WriteLine();
+
+            if (totalRegistros >= codigos.Length)
+            {
+                Console.Write("\u001b[1;38;2;201;46;22m");
+                Console.WriteLine("          No se pueden registrar mas expedientes.");
+                Console.WriteLine("          Capacidad maxima alcanzada.");
+                Console.Write("\u001b[0m");
+                Console.ResetColor();
+                return;
+            }
+
+            // DNI DEL REMITENTE
+            string dniIngresado;
+            bool dniValido;
+
+            do
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          Ingrese DNI del remitente (8 digitos): ");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                dniIngresado = Console.ReadLine();
+
+                dniValido = EsDniValido(dniIngresado);
+
+                if (!dniValido)
+                {
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine("          DNI invalido. Debe contener exactamente 8 numeros.");
+                    Console.Write("\u001b[0m");
+                }
+
+            } while (!dniValido);
+
+            // NOMBRE DEL REMITENTE
+            string remitenteIngresado;
+
+            do
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          Ingrese nombre completo del remitente: ");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                remitenteIngresado = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(remitenteIngresado))
+                {
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine("          El nombre del remitente no puede estar vacio.");
+                    Console.Write("\u001b[0m");
+                }
+
+            } while (string.IsNullOrWhiteSpace(remitenteIngresado));
+
+            // TIPO DE DOCUMENTO
+            string[] tiposPermitidos = {
+                "OFICIO",
+                "EXPEDIENTE",
+                "DOCUMENTO EXTERNO",
+                "SOLICITUD"
+            };
+
+            string tipoIngresado;
+            bool tipoValido;
+
+            Console.WriteLine();
+            Console.Write("\u001b[1;38;2;7;84;154m");
+            Console.WriteLine("              TIPOS DE DOCUMENTO DISPONIBLES");
+            Console.Write("\u001b[0m");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("          [1] OFICIO");
+            Console.WriteLine("          [2] EXPEDIENTE");
+            Console.WriteLine("          [3] DOCUMENTO EXTERNO");
+            Console.WriteLine("          [4] SOLICITUD");
+            Console.WriteLine();
+
+            do
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          Ingrese tipo de documento: ");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                tipoIngresado = Console.ReadLine().Trim().ToUpper();
+
+                tipoValido = tiposPermitidos.Contains(tipoIngresado);
+
+                if (!tipoValido)
+                {
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine("          Tipo de documento no valido. Intente nuevamente.");
+                    Console.Write("\u001b[0m");
+                }
+
+            } while (!tipoValido);
+
+            // ASUNTO
+            string asuntoIngresado;
+
+            do
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          Ingrese asunto del documento: ");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                asuntoIngresado = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(asuntoIngresado))
+                {
+                    Console.Write("\u001b[1;38;2;201;46;22m");
+                    Console.WriteLine("          El asunto no puede estar vacio.");
+                    Console.Write("\u001b[0m");
+                }
+
+            } while (string.IsNullOrWhiteSpace(asuntoIngresado));
+
+            // GENERAR CODIGO
+            string codigoGenerado = GenerarCodigo(totalRegistros);
+
+            codigos[totalRegistros] = codigoGenerado;
+            DNI[totalRegistros] = dniIngresado;
+            remitentes[totalRegistros] = remitenteIngresado;
+            tiposDoc[totalRegistros] = tipoIngresado;
+            asuntos[totalRegistros] = asuntoIngresado;
+            estados[totalRegistros] = "RECIBIDO";
+
+            totalRegistros++;
+            string registro = codigos[totalRegistros - 1] + "|" + DNI[totalRegistros - 1] + "|" + remitentes[totalRegistros - 1] + "|" + tiposDoc[totalRegistros - 1] + "|" + asuntos[totalRegistros - 1] + "|" + estados[totalRegistros - 1];
+            GuardarExpedientes(registro);
+
+            // CONFIRMACION (DORADO INSTITUCIONAL)
+            Console.WriteLine();
+            Console.Write("\u001b[1;38;2;208;184;63m");
+            Console.WriteLine("       ===========================================");
+            Console.WriteLine("              EXPEDIENTE REGISTRADO");
+            Console.WriteLine("       ===========================================");
+            Console.Write("\u001b[0m");
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine();
+            Console.WriteLine("          CODIGO: " + codigoGenerado);
+            Console.WriteLine("          DNI: " + dniIngresado);
+            Console.WriteLine("          REMITENTE: " + remitenteIngresado);
+            Console.WriteLine("          TIPO: " + tipoIngresado);
+            Console.WriteLine("          ASUNTO: " + asuntoIngresado);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("          ESTADO: RECIBIDO");
+
+            Console.Write("\u001b[1;38;2;208;184;63m");
+            Console.WriteLine("       ===========================================");
+            Console.Write("\u001b[0m");
+
+            Console.ResetColor();
         }
 
         //ORDENAR EXPEDIENTES
