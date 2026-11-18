@@ -62,40 +62,64 @@ namespace BibliotecaMesaPartes
                 return;
             }
 
-            // DNI DEL REMITENTE
+            // DNI Y NOMBRE DEL REMITENTE
             string dniIngresado;
-            bool dniValido;
-            do
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("     Ingrese DNI del remitente (8 digitos): ");
-                Console.ForegroundColor = ConsoleColor.White;
-
-                dniIngresado = Console.ReadLine();
-                dniValido = EsDniValido(dniIngresado);
-                if (!dniValido)
-                {
-                    Console.Write("\u001b[1;38;2;201;46;22m");
-                    Console.WriteLine("     DNI invalido. Debe contener exactamente 8 numeros.");
-                    Console.Write("\u001b[0m");
-                }
-            } while (!dniValido);
-
-            // NOMBRE DEL REMITENTE
             string remitenteIngresado;
+            bool datosCorrectos;
             do
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("     Ingrese nombre completo del remitente: ");
-                Console.ForegroundColor = ConsoleColor.White;
-                remitenteIngresado = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(remitenteIngresado))
+                datosCorrectos = true;
+                // INGRESAR DNI
+                do
                 {
-                    Console.Write("\u001b[1;38;2;201;46;22m");
-                    Console.WriteLine("     El nombre del remitente no puede estar vacio.");
-                    Console.Write("\u001b[0m");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("     Ingrese DNI del remitente (8 digitos): ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    dniIngresado = Console.ReadLine();
+                    if (!EsDniValido(dniIngresado))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("     DNI invalido. Debe contener exactamente 8 numeros.");
+                        Console.ResetColor();
+                    }
+                } while (!EsDniValido(dniIngresado));
+                // INGRESAR NOMBRE
+                do
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("     Ingrese nombre completo del remitente: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    remitenteIngresado = Console.ReadLine();
+                    if (string.IsNullOrWhiteSpace(remitenteIngresado))
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("     El nombre no puede estar vacio.");
+                        Console.ResetColor();
+                    }
+                } while (string.IsNullOrWhiteSpace(remitenteIngresado));
+
+                // VERIFICAR SI EL DNI YA ESTA REGISTRADO
+                for (int i = 0; i < totalRegistros; i++)
+                {
+                    if (DNI[i] == dniIngresado)
+                    {
+                        if (!string.Equals(DNI[i], dniIngresado) ||
+                            !string.Equals(remitentes[i].Trim(), remitenteIngresado.Trim(),
+                            StringComparison.OrdinalIgnoreCase))
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine();
+                            Console.WriteLine("     - ERROR: El DNI ingresado ya pertenece a otra persona.");
+                            Console.WriteLine("     - Nombre registrado: " + remitentes[i]);
+                            Console.WriteLine("     - Verifique el DNI o el nombre ingresado.");
+                            Console.ResetColor();
+                            datosCorrectos = false;
+                            break;
+                        }
+                    }
                 }
-            } while (string.IsNullOrWhiteSpace(remitenteIngresado));
+
+            } while (!datosCorrectos);
 
             // TIPO DE DOCUMENTO
             int opcionTipo;
