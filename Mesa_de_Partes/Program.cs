@@ -36,7 +36,7 @@ namespace MesaDePartesDigital
                 Console.Write("\u001b[0m");
 
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("          SISTEMA DE GESTION DOCUMENTARIA");
+                Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
                 Console.WriteLine();
 
                 // MENU PRINCIPAL
@@ -48,26 +48,20 @@ namespace MesaDePartesDigital
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("          [1] REGISTRAR EXPEDIENTE");
-
                 Console.WriteLine("          [2] MOSTRAR EXPEDIENTES");
-
                 Console.WriteLine("          [3] BUSCAR EXPEDIENTE");
-
                 Console.WriteLine("          [4] ORDENAR EXPEDIENTES");
-
                 Console.WriteLine("          [5] ESTADO DEL EXPEDIENTE");
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("          [0] SALIR DEL SISTEMA");
-
                 opcion = Convert.ToInt32(Console.ReadLine());
 
                 // PROCESAMIENTO DE OPCIONES
                 switch (opcion)
                 {
                     case 1:
-                        Expedientes.RegistrarExpediente
-                        (codigos, DNI, remitentes, tiposDoc, asuntos, estados, ref totalRegistros);
+                        Expedientes.RegistrarExpediente(codigos, DNI, remitentes, tiposDoc, asuntos, estados, ref totalRegistros);
                         break;
 
                     case 2:
@@ -75,8 +69,7 @@ namespace MesaDePartesDigital
                         break;
 
                     case 3:
-                        Expedientes.BuscarExpediente
-                        (codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
+                        Expedientes.BuscarExpediente(codigos, DNI, remitentes, tiposDoc, asuntos, estados, totalRegistros);
                         break;
 
                     case 4:
@@ -112,9 +105,7 @@ namespace MesaDePartesDigital
                     Console.ResetColor();
                     Console.ReadKey();
                 }
-
             } while (opcion != 0);
-
             Console.ResetColor();
         }
     }
