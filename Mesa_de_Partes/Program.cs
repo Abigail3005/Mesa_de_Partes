@@ -52,12 +52,9 @@ namespace MesaDePartesDigital
                 Console.WriteLine("          [2] MOSTRAR EXPEDIENTES");
 
                 Console.WriteLine("          [3] BUSCAR EXPEDIENTE");
-                Console.Write("\u001b[0m");
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("          [4] ORDENAR EXPEDIENTES");
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("          [5] ESTADO DEL EXPEDIENTE");
 
                 Console.ForegroundColor = ConsoleColor.Red;
