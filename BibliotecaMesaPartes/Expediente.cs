@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace BibliotecaMesaPartes
 {
@@ -103,8 +104,7 @@ namespace BibliotecaMesaPartes
                 {
                     if (DNI[i] == dniIngresado)
                     {
-                        if (!string.Equals(DNI[i], dniIngresado) ||
-                            !string.Equals(remitentes[i].Trim(), remitenteIngresado.Trim(),
+                        if (!string.Equals(remitentes[i].Trim(), remitenteIngresado.Trim(),
                             StringComparison.OrdinalIgnoreCase))
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -349,8 +349,8 @@ namespace BibliotecaMesaPartes
         // BUSCAR EXPEDIENTE
         public static void BuscarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, int totalRegistros)
         {
-            string codigoBuscado;
-            int pos = -1;
+            string dniBuscado;
+            bool encontrado = false;
 
             Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
@@ -359,7 +359,7 @@ namespace BibliotecaMesaPartes
             Console.WriteLine();
             Console.WriteLine("    ===========================================");
             Console.WriteLine("              MESA DE PARTES DIGITAL");
-            Console.WriteLine("                      UNC");
+            Console.WriteLine("                        UNC");
             Console.WriteLine("    ===========================================");
             Console.Write("\u001b[0m");
 
@@ -369,57 +369,61 @@ namespace BibliotecaMesaPartes
 
             // TITULO
             Console.Write("\u001b[1;38;2;7;84;154m");
-            Console.WriteLine("         BUSCAR EXPEDIENTE");
+            Console.WriteLine("         BUSCAR EXPEDIENTE POR DNI ");
             Console.WriteLine("    -------------------------------------------");
             Console.Write("\u001b[0m");
             if (totalRegistros == 0)
             {
-                Console.Write("\u001b[1;38;2;201;46;22m");
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("     No hay expedientes en el sistema.");
-                Console.Write("\u001b[0m");
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write("     Ingrese el codigo del expediente (EXP-2026-000): ");
-                codigoBuscado = Console.ReadLine();
-                for (int i = 0; i < totalRegistros; i++)
+                Console.Write("     Ingrese el DNI del remitente:     ");
+                dniBuscado = (Console.ReadLine() ?? "").Trim();
+
+                // VALIDAR DNI
+                if (!EsDniValido(dniBuscado))
                 {
-                    if (codigos[i].Equals(codigoBuscado, StringComparison.OrdinalIgnoreCase))
-                    {
-                        pos = i;
-                        break;
-                    }
-                }
-
-                if (pos != -1)
-                {
-                    Console.WriteLine();
-                    Console.Write("\u001b[1;38;2;208;184;63m");
-                    Console.WriteLine("    ===========================================");
-                    Console.WriteLine("              EXPEDIENTE ENCONTRADO");
-                    Console.WriteLine("    ===========================================");
-                    Console.Write("\u001b[0m");
-
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine();
-                    Console.WriteLine("     - CODIGO (EXP-2026-000): " + codigos[pos]);
-                    Console.WriteLine("     - DNI: " + DNI[pos]);
-                    Console.WriteLine("     - REMITENTE: " + remitentes[pos]);
-                    Console.WriteLine("     - TIPO: " + tiposDoc[pos]);
-                    Console.WriteLine("     - ASUNTO: " + asuntos[pos]);
-                    Console.WriteLine("     - ESTADO: " + estados[pos]);
-
-                    Console.Write("\u001b[1;38;2;208;184;63m");
-                    Console.WriteLine("    ===========================================");
-                    Console.Write("\u001b[0m");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("     DNI inválido. Debe contener exactamente 8 digitos.");
                 }
                 else
                 {
-                    Console.Write("\u001b[1;38;2;201;46;22m");
-                    Console.WriteLine();
-                    Console.WriteLine("     No se encontro el expediente.");
-                    Console.Write("\u001b[0m");
+                    //BUSCAR TODOS LOS EXPEDIENTES DEL DNI
+                    for (int i = 0; i < totalRegistros; i++)
+                    {
+                        if (DNI[i] == dniBuscado)
+                        {
+                            encontrado = true;
+                            Console.WriteLine();
+                            Console.Write("\u001b[1;38;2;208;184;63m");
+                            Console.WriteLine("    ===========================================");
+                            Console.WriteLine("              EXPEDIENTE ENCONTRADO");
+                            Console.WriteLine("    ===========================================");
+                            Console.Write("\u001b[0m");
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine();
+                            Console.WriteLine("     - CODIGO: " + codigos[i]);
+                            Console.WriteLine("     - DNI: " + DNI[i]);
+                            Console.WriteLine("     - REMITENTE: " + remitentes[i]);
+                            Console.WriteLine("     - TIPO: " + tiposDoc[i]);
+                            Console.WriteLine("     - ASUNTO: " + asuntos[i]);
+                            Console.WriteLine("     - ESTADO: " + estados[i]);
+
+                            Console.Write("\u001b[1;38;2;208;184;63m");
+                            Console.WriteLine("    ===========================================");
+                            Console.Write("\u001b[0m");
+                        }
+                    }
+                    if (!encontrado)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine();
+                        Console.WriteLine("     No se encontraron expedientes con el DNI: " + dniBuscado);
+                    }
                 }
             }
             Console.ResetColor();

@@ -55,7 +55,10 @@ namespace MesaDePartesDigital
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("          [0] SALIR DEL SISTEMA");
-                opcion = Convert.ToInt32(Console.ReadLine());
+                if (!int.TryParse(Console.ReadLine(), out opcion))
+                {
+                    opcion = -1;
+                }
 
                 // PROCESAMIENTO DE OPCIONES
                 switch (opcion)
