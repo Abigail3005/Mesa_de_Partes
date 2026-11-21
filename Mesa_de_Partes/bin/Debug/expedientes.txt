@@ -1,0 +1,5 @@
+EXP-2026-001|27296802|Alejandra Perez|SOLICITUD|Cambio de carrera|RECIBIDO
+EXP-2026-002|41122337|Lucy Fernandez Gonzales|OFICIO|Convocatoria a reunión ordinaria de coordinación interinstitucional|RECIBIDO
+EXP-2026-003|27296802|Melane Ortiz|OFICIO|cambio de sede|RECIBIDO
+EXP-2026-004|89745689|Kevin Salazar|EXPEDIENTE|Cambio de notas incorrectas|RECIBIDO
+EXP-2026-005|45678915|Yamilet Sanchez|EXPEDIENTE|Emisión de constancia de estudios|DERIVADO A OFICINA
