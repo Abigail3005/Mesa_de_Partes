@@ -321,7 +321,12 @@ namespace BibliotecaMesaPartes
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(" TIPO: ");
                     Console.ForegroundColor = ConsoleColor.White;
-                    Console.WriteLine(tiposDoc[i]);
+                    Console.Write($"{tiposDoc[i],-23}");
+                    
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write("| FECHA Y HORA: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine($"{fechasRegistro[i]}");
 
                     // Fila 4: Asunto
                     Console.ForegroundColor = ConsoleColor.Yellow;
