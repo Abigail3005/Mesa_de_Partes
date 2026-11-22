@@ -3,3 +3,4 @@ EXP-2026-002|41122337|Lucy Fernandez Gonzales|OFICIO|Convocatoria a reunión ord
 EXP-2026-003|27296802|Melane Ortiz|OFICIO|cambio de sede|RECIBIDO
 EXP-2026-004|89745689|Kevin Salazar|EXPEDIENTE|Cambio de notas incorrectas|RECIBIDO
 EXP-2026-005|45678915|Yamilet Sanchez|EXPEDIENTE|Emisión de constancia de estudios|DERIVADO A OFICINA
+EXP-2026-006|45678915|Yamilet Sanchez|DOCUMENTO EXTERNO|Le dieron 24356 apuñaladas|RECIBIDO|21/11/2026 22:09:10

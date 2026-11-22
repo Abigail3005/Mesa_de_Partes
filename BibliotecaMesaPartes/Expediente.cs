@@ -10,26 +10,6 @@ namespace BibliotecaMesaPartes
         // FECHA Y HORA DE REGISTRO (misma posicion que codigos[], DNI[], etc.)
         public static string[] fechasRegistro = new string[100];
 
-        // Validar DNI
-        public static bool EsDniValido(string dni)
-        {
-            if (string.IsNullOrWhiteSpace(dni) || dni.Length != 8)
-                return false;
-            foreach (char c in dni)
-            {
-                if (!char.IsDigit(c))
-                    return false;
-            }
-            return true;
-        }
-        // Generar código del expediente
-        public static string GenerarCodigo(int totalRegistros)
-        {
-            int numero = totalRegistros + 1;
-            int anioActual = DateTime.Now.Year;
-            return "EXP-" + anioActual + "-" + numero.ToString("D3");
-        }
-
         // REGISTRAR EXPEDIENTE
         public static void RegistrarExpediente(string[] codigos, string[] DNI, string[] remitentes, string[] tiposDoc, string[] asuntos, string[] estados, ref int totalRegistros)
         {
@@ -80,15 +60,15 @@ namespace BibliotecaMesaPartes
                     Console.Write("     Ingrese DNI del remitente (8 digitos): ");
                     Console.ForegroundColor = ConsoleColor.White;
                     dniIngresado = Console.ReadLine();
-                    if (!EsDniValido(dniIngresado))
+                    if (!UtilidadesExpediente.EsDniValido(dniIngresado))
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("     DNI invalido. Debe contener exactamente 8 numeros.");
                         Console.ResetColor();
                     }
-                } while (!EsDniValido(dniIngresado));
-                // INGRESAR NOMBRE
-                do
+                } while (!UtilidadesExpediente.EsDniValido(dniIngresado));
+            // INGRESAR NOMBRE
+            do
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("     Ingrese nombre completo del remitente: ");
@@ -186,7 +166,7 @@ namespace BibliotecaMesaPartes
             } while (string.IsNullOrWhiteSpace(asuntoIngresado));
 
             // GENERAR CODIGO
-            string codigoGenerado = GenerarCodigo(totalRegistros);
+            string codigoGenerado = UtilidadesExpediente.GenerarCodigo(totalRegistros);
             codigos[totalRegistros] = codigoGenerado;
             DNI[totalRegistros] = dniIngresado;
             remitentes[totalRegistros] = remitenteIngresado;
@@ -397,7 +377,7 @@ namespace BibliotecaMesaPartes
                 dniBuscado = (Console.ReadLine() ?? "").Trim();
 
                 // VALIDAR DNI
-                if (!EsDniValido(dniBuscado))
+                if (!UtilidadesExpediente.EsDniValido(dniBuscado))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("     DNI inválido. Debe contener exactamente 8 digitos.");
@@ -425,6 +405,7 @@ namespace BibliotecaMesaPartes
                             Console.WriteLine("     - TIPO: " + tiposDoc[i]);
                             Console.WriteLine("     - ASUNTO: " + asuntos[i]);
                             Console.WriteLine("     - ESTADO: " + estados[i]);
+                            Console.WriteLine("     - FECHA Y HORA DE REGISTRO: " + fechasRegistro[i]);
 
                             Console.Write("\u001b[1;38;2;208;184;63m");
                             Console.WriteLine("    ===========================================");
