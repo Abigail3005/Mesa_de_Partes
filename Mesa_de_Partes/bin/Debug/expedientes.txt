@@ -1,6 +1,8 @@
-EXP-2026-001|27296802|Alejandra Perez|SOLICITUD|Cambio de carrera|RECIBIDO
-EXP-2026-002|41122337|Lucy Fernandez Gonzales|OFICIO|Convocatoria a reunión ordinaria de coordinación interinstitucional|RECIBIDO
-EXP-2026-003|27296802|Melane Ortiz|OFICIO|cambio de sede|RECIBIDO
-EXP-2026-004|89745689|Kevin Salazar|EXPEDIENTE|Cambio de notas incorrectas|RECIBIDO
-EXP-2026-005|45678915|Yamilet Sanchez|EXPEDIENTE|Emisión de constancia de estudios|DERIVADO A OFICINA
+EXP-2026-001|27296802|Alejandra Perez|SOLICITUD|Cambio de carrera|RECIBIDO|SIN FECHA
+EXP-2026-002|41122337|Lucy Fernandez Gonzales|OFICIO|Convocatoria a reunión ordinaria de coordinación interinstitucional|RECIBIDO|SIN FECHA
+EXP-2026-003|27296802|Melane Ortiz|OFICIO|cambio de sede|RECIBIDO|SIN FECHA
+EXP-2026-004|89745689|Kevin Salazar|EXPEDIENTE|Cambio de notas incorrectas|RECIBIDO|SIN FECHA
+EXP-2026-005|45678915|Yamilet Sanchez|EXPEDIENTE|Emisión de constancia de estudios|FINALIZADO / ATENDIDO|SIN FECHA
 EXP-2026-006|45678915|Yamilet Sanchez|DOCUMENTO EXTERNO|Le dieron 24356 apuñaladas|RECIBIDO|21/11/2026 22:09:10
+EXP-2026-007|60879589|Yassmín Cruzado|EXPEDIENTE|tramites academicos|RECIBIDO|22/11/2026 15:55:54
+EXP-2026-008|42060441|Yanel Cruzado|SOLICITUD|Cambio de horario academico|RECIBIDO|22/11/2026 16:04:44

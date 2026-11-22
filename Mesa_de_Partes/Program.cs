@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,119 @@ namespace MesaDePartesDigital
     {
         static void Main(string[] args)
         {
+            // PANEL DE INICIO DE SESION
+            string usuarioCorrecto = "grupo4";
+            string contrasenaCorrecta = "mesadepartes";
+
+            string usuario;
+            string contrasena;
+            int intentos = 3;
+            bool acceso = false;
+
+            while (intentos > 0)
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.Clear();
+
+                Console.Write("\u001b[1;38;2;7;84;154m");
+                Console.WriteLine();
+                Console.WriteLine("       ===========================================");
+                Console.WriteLine("              MESA DE PARTES DIGITAL");
+                Console.WriteLine("                         UNC");
+                Console.WriteLine("       ===========================================");
+                Console.Write("\u001b[0m");
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("             SISTEMA DE GESTION DOCUMENTARIA");
+                Console.WriteLine();
+
+                Console.Write("\u001b[1;38;2;208;184;63m");
+                Console.WriteLine("                 INICIO DE SESION");
+                Console.WriteLine("       -------------------------------------------");
+                Console.Write("\u001b[0m");
+                Console.WriteLine();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          INGRESE USUARIO: ");
+                Console.ForegroundColor = ConsoleColor.White;
+                usuario = Console.ReadLine();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("          INGRESE CONTRASEÑA: ");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                contrasena = "";
+                ConsoleKeyInfo tecla;
+
+                do
+                {
+                    tecla = Console.ReadKey(true);
+
+                    if (tecla.Key == ConsoleKey.Backspace && contrasena.Length > 0)
+                    {
+                        contrasena = contrasena.Substring(0, contrasena.Length - 1);
+                        Console.Write("\b \b");
+                    }
+                    else if (tecla.Key != ConsoleKey.Backspace &&
+                             tecla.Key != ConsoleKey.Enter &&
+                             !char.IsControl(tecla.KeyChar))
+                    {
+                        contrasena += tecla.KeyChar;
+                        Console.Write("*");
+                    }
+
+                } while (tecla.Key != ConsoleKey.Enter);
+
+                if (usuario == usuarioCorrecto && contrasena == contrasenaCorrecta)
+                {
+                    acceso = true;
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("          =================================");
+                    Console.WriteLine("                ACCESO AUTORIZADO");
+                    Console.WriteLine("          =================================");
+                    Console.ResetColor();
+
+                    Console.WriteLine();
+                    Console.WriteLine("          Bienvenido al sistema.");
+                    Console.WriteLine("          Presione una tecla para continuar...");
+                    Console.ReadKey();
+                    break;
+                }
+                else
+                {
+                    intentos--;
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    Console.WriteLine("          USUARIO O CONTRASEÑA INCORRECTOS.");
+                    Console.WriteLine("          INTENTOS RESTANTES: " + intentos);
+                    Console.ResetColor();
+
+                    Console.WriteLine();
+                    Console.WriteLine("          Presione una tecla para continuar...");
+                    Console.ReadKey();
+                }
+            }
+
+            if (!acceso)
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine();
+                Console.WriteLine("       ===========================================");
+                Console.WriteLine("                  ACCESO DENEGADO");
+                Console.WriteLine("       ===========================================");
+                Console.WriteLine("          Se agotaron los intentos.");
+                Console.ResetColor();
+                return;
+            }
+
+            // ARREGLOS DEL SISTEMA
+
             string[] codigos = new string[100];
             string[] DNI = new string[100];
             string[] remitentes = new string[100];
@@ -55,6 +169,7 @@ namespace MesaDePartesDigital
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("          [0] SALIR DEL SISTEMA");
+
                 if (!int.TryParse(Console.ReadLine(), out opcion))
                 {
                     opcion = -1;
@@ -108,7 +223,9 @@ namespace MesaDePartesDigital
                     Console.ResetColor();
                     Console.ReadKey();
                 }
+
             } while (opcion != 0);
+
             Console.ResetColor();
         }
     }
