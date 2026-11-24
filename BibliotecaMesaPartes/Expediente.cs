@@ -7,6 +7,15 @@ namespace BibliotecaMesaPartes
 {
     public class Expedientes
     {
+                // GENERAR CODIGO DEL EXPEDIENTE
+        public static string GenerarCodigo(int totalRegistros)
+        {
+            int numero = totalRegistros + 1;
+            int anioActual = DateTime.Now.Year;
+
+            return "EXP-" + anioActual + "-" + numero.ToString("D3");
+        }
+
         // FECHA Y HORA DE REGISTRO (misma posicion que codigos[], DNI[], etc.)
         public static string[] fechasRegistro = new string[100];
 
@@ -60,13 +69,13 @@ namespace BibliotecaMesaPartes
                     Console.Write("     Ingrese DNI del remitente (8 digitos): ");
                     Console.ForegroundColor = ConsoleColor.White;
                     dniIngresado = Console.ReadLine();
-                    if (!UtilidadesExpediente.EsDniValido(dniIngresado))
+                    if (!ValidacionDNI.EsDniValido(dniIngresado))
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("     DNI invalido. Debe contener exactamente 8 numeros.");
                         Console.ResetColor();
                     }
-                } while (!UtilidadesExpediente.EsDniValido(dniIngresado));
+                } while (!ValidacionDNI.EsDniValido(dniIngresado));
             // INGRESAR NOMBRE
             do
                 {
@@ -166,7 +175,7 @@ namespace BibliotecaMesaPartes
             } while (string.IsNullOrWhiteSpace(asuntoIngresado));
 
             // GENERAR CODIGO
-            string codigoGenerado = UtilidadesExpediente.GenerarCodigo(totalRegistros);
+            string codigoGenerado = GenerarCodigo(totalRegistros);
             codigos[totalRegistros] = codigoGenerado;
             DNI[totalRegistros] = dniIngresado;
             remitentes[totalRegistros] = remitenteIngresado;
@@ -382,7 +391,7 @@ namespace BibliotecaMesaPartes
                 dniBuscado = (Console.ReadLine() ?? "").Trim();
 
                 // VALIDAR DNI
-                if (!UtilidadesExpediente.EsDniValido(dniBuscado))
+                if (!ValidacionDNI.EsDniValido(dniBuscado))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("     DNI inválido. Debe contener exactamente 8 digitos.");
