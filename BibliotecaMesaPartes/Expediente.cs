@@ -186,9 +186,10 @@ namespace BibliotecaMesaPartes
             // FECHA Y HORA DE REGISTRO (se toma automaticamente del sistema)
             string fechaRegistro = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             fechasRegistro[totalRegistros] = fechaRegistro;
+            FechasActualizacion[totalRegistros] = "SIN ACTUALIZACION";
 
             totalRegistros++;
-            string registro = codigos[totalRegistros - 1] + "|" + DNI[totalRegistros - 1] + "|" + remitentes[totalRegistros - 1] + "|" + tiposDoc[totalRegistros - 1] + "|" + asuntos[totalRegistros - 1] + "|" + estados[totalRegistros - 1] + "|" + fechasRegistro[totalRegistros - 1];
+            string registro = codigos[totalRegistros - 1] + "|" + DNI[totalRegistros - 1] + "|" + remitentes[totalRegistros - 1] + "|" + tiposDoc[totalRegistros - 1] + "|" + asuntos[totalRegistros - 1] + "|" + estados[totalRegistros - 1] + "|" + fechasRegistro[totalRegistros - 1]+"|"+FechasActualizacion[totalRegistros-1];
             GuardarExpedientes(registro);
 
             // CONFIRMACION (DORADO INSTITUCIONAL)
@@ -267,6 +268,10 @@ namespace BibliotecaMesaPartes
                             string auxFecha = fechasRegistro[j];
                             fechasRegistro[j] = fechasRegistro[j + 1];
                             fechasRegistro[j + 1] = auxFecha;
+
+                            string auxFechaActualizacion = FechasActualizacion[j];
+                            FechasActualizacion[j] = FechasActualizacion[j + 1];
+                            FechasActualizacion[j + 1] = auxFechaActualizacion;
                         }
                     }
                 }
@@ -336,6 +341,12 @@ namespace BibliotecaMesaPartes
                     Console.Write("| FECHA Y HORA: ");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine($"{fechasRegistro[i]}");
+
+                    //fecha y hora de actualizacion estado
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(" FECHA ACTUALIZACION ESTADO: ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine(FechasActualizacion[i]);
 
                     // Fila 4: Asunto
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -545,6 +556,8 @@ namespace BibliotecaMesaPartes
                             estados[pos] = "ARCHIVADO";
                             break;
                     }
+                    // REGISTRAR FECHA Y HORA DE ACTUALIZACION
+                    FechasActualizacion[pos] = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write("\u001b[1m");
@@ -557,6 +570,7 @@ namespace BibliotecaMesaPartes
                     Console.WriteLine();
                     Console.WriteLine("     - Codigo: " + codigos[pos]);
                     Console.WriteLine("     - Nuevo estado: " + estados[pos]);
+                    Console.WriteLine("     - Fecha y hora de actualizacion: " + FechasActualizacion[pos]);
                 }
             }
             Console.ResetColor();
@@ -580,7 +594,7 @@ namespace BibliotecaMesaPartes
                 while ((linea = lector.ReadLine()) != null)
                 {
                     string[] columnas = linea.Split('|');
-                    if ((columnas.Length == 6 || columnas.Length == 7) && totalRegistros < codigos.Length)
+                    if ((columnas.Length == 6 || columnas.Length == 7 || columnas.Length == 8) && totalRegistros < codigos.Length)
                     {
                         codigos[totalRegistros] = columnas[0];
                         DNI[totalRegistros] = columnas[1];
@@ -589,10 +603,15 @@ namespace BibliotecaMesaPartes
                         asuntos[totalRegistros] = columnas[4];
                         estados[totalRegistros] = columnas[5];
                         // Los expedientes antiguos (6 columnas) no tienen fecha
-                        if (columnas.Length == 7)
+                        if (columnas.Length >= 7)
                             fechasRegistro[totalRegistros] = columnas[6];
                         else
                             fechasRegistro[totalRegistros] = "SIN FECHA";
+                        // CARGAR FECHA Y HORA DE ACTUALIZACION
+                        if (columnas.Length == 8)
+                            FechasActualizacion[totalRegistros] = columnas[7];
+                        else
+                            FechasActualizacion[totalRegistros] = "SIN ACTUALIZACION";
                         totalRegistros++;
                     }
                 }
@@ -606,9 +625,11 @@ namespace BibliotecaMesaPartes
             StreamWriter escritor = new StreamWriter("expedientes.txt");
             for (int i = 0; i < totalRegistros; i++)
             {
-                escritor.WriteLine(codigos[i] + "|" + DNI[i] + "|" + remitentes[i] + "|" + tiposDoc[i] + "|" + asuntos[i] + "|" + estados[i] + "|" + fechasRegistro[i]);
+                escritor.WriteLine(codigos[i] + "|" + DNI[i] + "|" + remitentes[i] + "|" + tiposDoc[i] + "|" + asuntos[i] + "|" + estados[i] + "|" + fechasRegistro[i]+"|"+FechasActualizacion[i]);
             }
             escritor.Close();
         }
+        //fecha y hora de actualizacion 
+        public static string[] FechasActualizacion = new string[100];
     }
 }
